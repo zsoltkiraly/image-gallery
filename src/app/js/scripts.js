@@ -68,7 +68,6 @@ var imageGallery = function() {
             bodyGallery.classList.add('body-image-gallery', 'in-active');
 
             bodyGallery.innerHTML = 
-            '<div class="landscape"><span>Kedves felhasználó, kérjük fordíts vissza portrait nézetbe a telefont.</span></div>' +
             '<div class="body-image-gallery-overlay"></div>' +
             '<div class="body-image-gallery-container">' +
 
@@ -142,7 +141,7 @@ var imageGallery = function() {
     function _isLandscape() {
         var landscape;
 
-        if(window.orientation === 90 || window.orientation === -90) {
+        if(window.innerHeight < window.innerWidth) {
             landscape = true;
         } else {
             landscape = false;
@@ -154,10 +153,10 @@ var imageGallery = function() {
        
     function _setLandscape(l) {
         if(_isLandscape()) {
-            l.classList.add('active');
+            l.classList.add('landscape');
 
         } else {
-            l.classList.remove('active');
+            l.classList.remove('landscape');
         } 
     }           
 
@@ -678,21 +677,15 @@ var imageGallery = function() {
                     _scroll();
                     _thumb(element);
 
-                    var landscape = bodyImageGallery.querySelector('.landscape');
+                    _setLandscape(bodyImageGallery);
 
-                    if(landscape) {
-                        _setLandscape(landscape);
+                    window.addEventListener('orientationchange', function() {
+                        _setLandscape(bodyImageGallery);
+                    }, false);
 
-                        window.addEventListener('orientationchange', function() {
-                            _setLandscape(landscape);
-                        }, false);
-
-                        window.addEventListener('resize', function() {
-                            _setLandscape(landscape);
-                        }, false);
-
-
-                    }
+                    window.addEventListener('resize', function() {
+                        _setLandscape(bodyImageGallery);
+                    }, false);
                 }
             }, false);
         });

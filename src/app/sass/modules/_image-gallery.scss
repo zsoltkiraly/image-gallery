@@ -69,6 +69,7 @@ section.user-image-gallery {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
+                object-position: 50% 50%;
 
                 @include backface-visibility(hidden);
             }
@@ -93,31 +94,6 @@ section.body-image-gallery {
 
     &.active { @include opacity(1); }
 
-    .landscape {
-        z-index: 9;
-        background-color: black;
-        padding: 20px;
-        display: none;
-
-        @include full-absolute();
-
-        span {
-            top: 50%;
-            left: 50%;
-            position: absolute;
-            display: inline-block;
-            color: white;
-            font-size: 18px;
-            line-height: 26px;
-            color: white;
-            text-align: center;
-
-            @include translate(-50%, -50%);
-        }
-
-        &.active { display: block; }
-    }
-
     .body-image-gallery-overlay {
         z-index: 1;
         background-color: rgba(0, 0, 0, .95);
@@ -138,6 +114,7 @@ section.body-image-gallery {
 
         img {
             object-fit: cover;
+            object-position: 50% 50%;
             width: 100%;
             height: 100%;
 
@@ -147,8 +124,6 @@ section.body-image-gallery {
             &.in-active { @include opacity(0); }
     
         }
-
-        @media only screen and (max-width: $tablet) { width: calc(100vw - 250px); }
 
         @media only screen and (max-width: $mobile) { width: 100%; @include align-self(center); }
 
@@ -185,7 +160,6 @@ section.body-image-gallery {
             background-color: black;
 
             @media only screen and (min-width: $minMobile) { padding: 90px 0 40px; }
-            @media only screen and (max-width: $tablet) { width: 250px; }
             @media only screen and (max-width: $mobile) {
                 width: 100%;
                 background-color: transparent;
@@ -283,6 +257,7 @@ section.body-image-gallery {
 
                                             img {
                                                 object-fit: cover;
+                                                object-position: 50% 50%;
                                                 width: 100%;
                                                 height: 100%;
                                                 
@@ -477,6 +452,7 @@ section.body-image-gallery {
 
                                         img {
                                             object-fit: cover;
+                                            object-position: 50% 50%;
                                             width: 100%;
                                             height: 100%;
                                             
@@ -497,6 +473,30 @@ section.body-image-gallery {
         }
     }
 
+    &.landscape {
+        @media only screen and (max-width: $mobile) {
+            .body-image-gallery-container {
+
+                .image-gallery-sidebar {
+
+                    .image-gallery-header,
+                    .sidebar-container {
+                        display: none;
+                    }
+
+                    .body-image {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        max-height: 80vh;
+                        max-width: 80vw;
+
+                        @include translate(-50%, -50%);
+                    }
+                }
+            }
+        }
+    }
 
 
     //Arrow previous & arrow next start
