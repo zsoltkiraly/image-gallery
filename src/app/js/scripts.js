@@ -138,9 +138,29 @@ var imageGallery = function() {
         }
     }
 
-    function isLandscape() {
-        return (window.orientation === 90 || window.orientation === -90);
+
+    function _isLandscape() {
+        var landscape;
+
+        if(window.orientation === 90 || window.orientation === -90) {
+            landscape = true;
+        } else {
+            landscape = false;
+        }
+
+        return landscape;
     }
+
+       
+    function _setLandscape(l) {
+        if(_isLandscape()) {
+            l.classList.add('active');
+
+        } else {
+            l.classList.remove('active');
+        } 
+    }           
+
 
     function _disableScroll() { document.body.classList.add('overflow-hidden'); }
     function _enableScroll() { document.body.classList.remove('overflow-hidden'); }
@@ -661,20 +681,17 @@ var imageGallery = function() {
                     var landscape = bodyImageGallery.querySelector('.landscape');
 
                     if(landscape) {
-                        if(isLandscape()) {
-                            landscape.classList.add('active');
-                            
-                        } else {
-                            landscape.classList.remove('active');
-                        }
+                        _setLandscape(landscape);
 
-                        window.addEventListener("orientationchange", function() {
-                            if(window.orientation === 90 || window.orientation === -90) {
-                                landscape.classList.add('active');
-                            } else {
-                                landscape.classList.remove('active');
-                            }
+                        window.addEventListener('orientationchange', function() {
+                            _setLandscape(landscape);
                         }, false);
+
+                        window.addEventListener('resize', function() {
+                            _setLandscape(landscape);
+                        }, false);
+
+
                     }
                 }
             }, false);
