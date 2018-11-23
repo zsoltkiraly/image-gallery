@@ -141,7 +141,7 @@ var imageGallery = function() {
     function _isLandscape() {
         var landscape;
 
-        if(window.innerHeight < window.innerWidth) {
+        if(window.innerHeight < window.innerWidth || window.orientation === 90 || window.orientation === -90) {
             landscape = true;
         } else {
             landscape = false;
