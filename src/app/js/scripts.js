@@ -161,7 +161,11 @@ var imageGallery = function() {
 
 
     function _disableScroll() {
-        if(document.documentElement.clientWidth < window.innerWidth ) {
+        if (window.matchMedia("(min-width: 992px)").matches) {
+            if(document.documentElement.clientWidth < window.innerWidth) {
+                document.body.classList.add('overflow-hidden');
+            }
+        } else {
             document.body.classList.add('overflow-hidden');
         }
     }

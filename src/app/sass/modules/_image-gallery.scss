@@ -417,7 +417,8 @@ section.body-image-gallery {
                             line-height: 20px;
                             min-height: 60px;
                             max-height: 60px;
-                            overflow-y: auto;
+                            overflow-y: scroll;
+                            -webkit-overflow-scrolling: touch;
                             margin-bottom: 15px;
                             margin-top: 15px;
                         }
