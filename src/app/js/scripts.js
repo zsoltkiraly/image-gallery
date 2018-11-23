@@ -68,6 +68,7 @@ var imageGallery = function() {
             bodyGallery.classList.add('body-image-gallery', 'in-active');
 
             bodyGallery.innerHTML = 
+            '<div class="landscape"><span>Kedves felhasználó, kérjük fordíts vissza portrait nézetbe a telefont.</span></div>' +
             '<div class="body-image-gallery-overlay"></div>' +
             '<div class="body-image-gallery-container">' +
 
@@ -137,6 +138,9 @@ var imageGallery = function() {
         }
     }
 
+    function isLandscape() {
+        return (window.orientation === 90 || window.orientation === -90);
+    }
 
     function _disableScroll() { document.body.classList.add('overflow-hidden'); }
     function _enableScroll() { document.body.classList.remove('overflow-hidden'); }
@@ -513,8 +517,6 @@ var imageGallery = function() {
                 bodyImage.addEventListener('touchstart', function(e) {
                     var touchobj = e.changedTouches[0];
                     startxTouch = parseInt(touchobj.clientX);
-
-                    e.preventDefault();
                 }, false);
 
 
@@ -530,26 +532,28 @@ var imageGallery = function() {
                             _next(element, bodyImageSrc, id, bodyImageGallery, loading);
                         }
                     }
-                    e.preventDefault();
                 }, false);
 
-                bodyImage.addEventListener('mousedown', function(e) {
-                    startxMouse = event.clientX;
 
-                    e.preventDefault();
-
-                     bodyImage.addEventListener('mouseup', function(e) {
-                        distMouse = startxMouse - event.clientX;
-                        if (distMouse > 100) {
-                            _next(element, bodyImageSrc, id, bodyImageGallery, loading);
-
-                        } else if (distMouse < -100) {
-                            _previous(element, bodyImageSrc, id, bodyImageGallery, loading);
-                        }
+                if (window.matchMedia("(min-width: 768px)").matches) {
+                    bodyImage.addEventListener('mousedown', function(e) {
+                        startxMouse = event.clientX;
 
                         e.preventDefault();
+
+                         bodyImage.addEventListener('mouseup', function(e) {
+                            distMouse = startxMouse - event.clientX;
+                            if (distMouse > 100) {
+                                _next(element, bodyImageSrc, id, bodyImageGallery, loading);
+
+                            } else if (distMouse < -100) {
+                                _previous(element, bodyImageSrc, id, bodyImageGallery, loading);
+                            }
+
+                            e.preventDefault();
+                        }, false);
                     }, false);
-                }, false);
+                }
             }
         }
     }
@@ -653,6 +657,25 @@ var imageGallery = function() {
                     _openImageGallery(bodyImageGallery);
                     _scroll();
                     _thumb(element);
+
+                    var landscape = bodyImageGallery.querySelector('.landscape');
+
+                    if(landscape) {
+                        if(isLandscape()) {
+                            landscape.classList.add('active');
+                            
+                        } else {
+                            landscape.classList.remove('active');
+                        }
+
+                        window.addEventListener("orientationchange", function() {
+                            if(window.orientation === 90 || window.orientation === -90) {
+                                landscape.classList.add('active');
+                            } else {
+                                landscape.classList.remove('active');
+                            }
+                        }, false);
+                    }
                 }
             }, false);
         });
