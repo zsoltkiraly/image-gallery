@@ -31,8 +31,12 @@ i {
   content: "\e902";
 }
 
-html {
-    touch-action: manipulation
+
+body.overflow-hidden {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    overflow-y: scroll;
 }
 
 //User gallery
@@ -92,7 +96,7 @@ section.body-image-gallery {
 
     .body-image-gallery-overlay {
         z-index: 1;
-        background-color: rgba(0, 0, 0, .95);
+        background-color: black;
 
         @include full-absolute();
     }
