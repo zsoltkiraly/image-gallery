@@ -38,7 +38,6 @@ var imageGallery = function() {
         }
     }
 
-
     function keydown() {
         document.addEventListener('keydown', function(e) {
             var bodyImageGallery = document.querySelector('.body-image-gallery');
@@ -161,8 +160,8 @@ var imageGallery = function() {
     }           
 
 
-    function _disableScroll() { document.body.classList.add('overflow-hidden'); }
-    function _enableScroll() { document.body.classList.remove('overflow-hidden'); }
+    //function _disableScroll() { document.body.classList.add('overflow-hidden'); }
+    //function _enableScroll() { document.body.classList.remove('overflow-hidden'); }
 
 
     //PerfectScrollbar
@@ -215,7 +214,8 @@ var imageGallery = function() {
                 bIG.classList.add('active');
             }, 50);
 
-            _disableScroll();
+            //_disableScroll();
+            scrollDestroy.disableScroll();
         }
     }
 
@@ -234,13 +234,17 @@ var imageGallery = function() {
                     document.body.removeChild(bodyImageGallery);
                 }, 550);
 
-                _enableScroll();
+                //_enableScroll();
+                scrollDestroy.enableScroll();
 
                 var itemActive = id.querySelector('ul.user-image-gallery-container li.active');
 
                 if(itemActive) {
                     itemActive.classList.remove('active');
                 }
+
+                //document.documentElement.scrollTop = document.body.scrollTop = document.body.getAttribute('data-scroll');
+                //document.body.removeAttribute('data-scroll');
             }
 
             closeIcon.addEventListener('click', function() {
@@ -612,6 +616,8 @@ var imageGallery = function() {
         forEach(element, function (index, el) {
             el.addEventListener('click', function() {
 
+                //document.body.setAttribute('data-scroll', window.pageYOffset);
+
                 _indexUserGallery(element);
                 _renderGalleryDOM(element);
                 _closeGalleryClick(id);
@@ -676,7 +682,6 @@ var imageGallery = function() {
                     _openImageGallery(bodyImageGallery);
                     _scroll();
                     _thumb(element);
-
                     _setLandscape(bodyImageGallery);
 
                     window.addEventListener('orientationchange', function() {
@@ -705,6 +710,54 @@ var imageGallery = function() {
     return {
         app:app,
         keydown:keydown
+    }
+
+}();
+
+
+var scrollDestroy = function() {
+    var keys = {37: 1, 38: 1, 39: 1, 40: 1, 32: 1, 33: 1, 34: 1, 35: 1, 36: 1};
+
+    function preventDefault(e) {
+        e = e || window.event;
+
+        if (e.preventDefault) {
+            e.preventDefault();
+        }
+
+        e.returnValue = false;  
+    }
+
+    function preventDefaultForScrollKeys(e) {
+        if (keys[e.keyCode]) {
+            preventDefault(e);
+            return false;
+        }
+    }
+
+    function disableScroll() {
+        if (window.addEventListener) {
+            window.addEventListener('DOMMouseScroll', preventDefault, false);
+        }
+        window.onwheel = preventDefault;
+        window.onmousewheel = document.onmousewheel = preventDefault;
+        window.ontouchmove  = preventDefault;
+        document.onkeydown  = preventDefaultForScrollKeys;
+    }
+
+    function enableScroll() {
+        if (window.removeEventListener) {
+            window.removeEventListener('DOMMouseScroll', preventDefault, false);
+        }
+        window.onmousewheel = document.onmousewheel = null; 
+        window.onwheel = null; 
+        window.ontouchmove = null;  
+        document.onkeydown = null;  
+    }
+
+    return {
+        disableScroll:disableScroll,
+        enableScroll:enableScroll
     }
 
 }();

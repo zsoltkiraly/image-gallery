@@ -31,12 +31,8 @@ i {
   content: "\e902";
 }
 
-
-body.overflow-hidden {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    overflow-y: scroll;
+html {
+    touch-action: manipulation
 }
 
 //User gallery
