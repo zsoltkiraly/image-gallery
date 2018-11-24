@@ -12,6 +12,7 @@
 - Thumb images (desktop, tablet and mobile)
 - Toggle details
 - Swipe
+- Counter
 - Loading icon
 
 #
