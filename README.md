@@ -3,6 +3,17 @@
 <br />
 <a href="https://zsoltkiraly.com/developments/image-gallery/" target="_blank">DEMO PAGE</a>
 
+<img src="http://zsoltkiraly.com/developments/_images/image-gallery-001.jpg">
+
+## IMAGE GALLERY FUNCTIONS
+
+- Full responsive
+- Different landscape and portrait views on mobile and tablet
+- Thumb images (desktop, tablet and mobile)
+- Toggle details
+- Swipe
+- Loading icon
+
 #
 <br />
 
