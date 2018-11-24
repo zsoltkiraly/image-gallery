@@ -87,7 +87,7 @@ var imageGallery = function() {
                             '<div class="counter mobile">' +
                                 '<span class="number"></span> / <span class="number-max"></span>' + 
                             '</div>' + 
-                            '<div class="details-button"><span>Részletek</span> <i class="arrow"></i></div>' +
+                            '<div class="details-button"><span>Details</span> <i class="arrow"></i></div>' +
                         '</div>' + 
 
                         '<div class="toggle-wrapper">' +
