@@ -596,12 +596,22 @@ var imageGallery = function() {
 
 
                     if(toggleWrapperContainer.classList.contains('active')) {
-                       toggleWrapperContainer.classList.remove('active');
-                       button.classList.remove('active');
+                        button.classList.remove('active');
+
+                        toggleWrapperContainer.classList.remove('active');
+
+                        setTimeout(function() {
+                            toggleWrapperContainer.classList.remove('block');
+                        }, 250);
 
                     } else {
-                        toggleWrapperContainer.classList.add('active');
                         button.classList.add('active');
+
+                        toggleWrapperContainer.classList.add('block');
+
+                        setTimeout(function() {
+                            toggleWrapperContainer.classList.add('active');
+                        }, 50);
                     }
                 }, false);
             }

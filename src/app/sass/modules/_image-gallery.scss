@@ -400,10 +400,11 @@ section.body-image-gallery {
                         .toggle-wrapper-container {
                             margin-top: -100%;
                             position: relative;
-                            display: block;
+                            display: none;
 
                             @include transition(margin-top .2s ease-out);
-
+                            
+                            &.block { display: block; }
                             &.active { margin-top: 0; }
                         }
                     }
