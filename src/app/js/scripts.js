@@ -182,7 +182,13 @@ var imageGallery = function() {
                 ps__railY = document.querySelector('.ps__rail-y');
 
             if (window.matchMedia("(min-width: 769px)").matches) {
+                if(thumb && !ps__railX && !ps__railY) {
+                    ps = new PerfectScrollbar(thumb);
+                }
                 ps.update();
+
+            } else {
+                ps.destroy();
             }
 
             if(thumb) {
@@ -284,10 +290,10 @@ var imageGallery = function() {
         if(img && span) {
 
             forEach(header, function (index, h) {
-                h.innerHTML = img.alt;
+                h.innerHTML = span.innerHTML;
             });
 
-            leadParam.innerHTML = span.innerHTML;
+            leadParam.innerHTML = img.alt;
         }
     }
 
