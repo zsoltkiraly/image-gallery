@@ -174,37 +174,26 @@ var imageGallery = function() {
 
     //PerfectScrollbar
     function _scroll() {
-        var thumb = document.querySelector('.body-image-gallery .thumb ul');
-
-        var ps = new PerfectScrollbar(thumb);
+        var thumb = document.querySelector('.body-image-gallery .thumb ul'),
+            ps = new PerfectScrollbar(thumb);
         
         function updateScroll() {
             var ps__railX = document.querySelector('.ps__rail-x'),
                 ps__railY = document.querySelector('.ps__rail-y');
 
-            if(thumb && !ps__railX && !ps__railY) {
-                if (window.matchMedia("(min-width: 769px)").matches) {
-                    var newScroll = new PerfectScrollbar(thumb);
-                    newScroll.update();
-                }
+            if (window.matchMedia("(min-width: 769px)").matches) {
+                ps.update();
             }
+
             if(thumb) {
                 thumb.scrollTop = 0;
             }
         }
 
-        function destroyScroll() {
-            if (window.matchMedia("(max-width: 768px)").matches) {
-                ps.destroy();
-            }
-        }
-
         updateScroll();
-        destroyScroll();
 
         window.addEventListener('resize', function() {
             updateScroll();
-            destroyScroll();
         }, false);
     }
 

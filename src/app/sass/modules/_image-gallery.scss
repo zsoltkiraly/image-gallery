@@ -251,7 +251,7 @@ section.body-image-gallery {
                                             cursor: pointer;
                                             height: 90px;
 
-                                            @media (min-width: $minMobile) and (max-width: $tablet) { height: 60px; }
+                                            @media (min-width: $minMobile) and (max-width: $tablet) { height: 83px; }
 
                                             @include flex(0 1 calc(33.3333% - 10px));
 
@@ -587,6 +587,8 @@ section.body-image-gallery {
 .ps--active-y > .ps__rail-y {
     display: block;
     background-color: transparent;
+
+    @media only screen and (max-width: $mobile) { display: none; }
 }
 
 .ps__thumb-y {
