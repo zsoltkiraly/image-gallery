@@ -174,7 +174,7 @@ section.body-image-gallery {
 
             //Header - title
             .image-gallery-header {
-                max-height: 90px;
+                max-height: 75px;
                 background-color: black;
                 z-index: 3;
                 font-size: 20px;
@@ -328,7 +328,8 @@ section.body-image-gallery {
                     padding: 20px 50px 10px 20px;
                     font-size: 16px;
                     max-height: none;
-                    height: 90px;
+                    line-height: 20px;
+                    height: 60px;
                     overflow: hidden;
 
                     @include full-block();
