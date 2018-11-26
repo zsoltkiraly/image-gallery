@@ -96,7 +96,7 @@ section.body-image-gallery {
 
     .body-image-gallery-overlay {
         z-index: 1;
-        background-color: #111;
+        background-color: rgba(0,0,0, 0.99);
 
         @include full-absolute();
     }

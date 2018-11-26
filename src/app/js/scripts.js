@@ -1,6 +1,6 @@
 /*
 Image gallery - Code by Zsolt Király
-v1.0.1 - 2018-11-21
+v1.0.1 - 2018-11-26
 */
 
 var imageGallery = function() {
@@ -174,36 +174,38 @@ var imageGallery = function() {
 
     //PerfectScrollbar
     function _scroll() {
+        var thumb = document.querySelector('.body-image-gallery .thumb ul');
 
-        function perfectScroll() {
-            var thumb = document.querySelector('.body-image-gallery .thumb ul'),
-                ps__railX = document.querySelector('.ps__rail-x'),
+        var ps = new PerfectScrollbar(thumb);
+        
+        function updateScroll() {
+            var ps__railX = document.querySelector('.ps__rail-x'),
                 ps__railY = document.querySelector('.ps__rail-y');
 
-            if (window.matchMedia("(min-width: 768px)").matches) {
-                if(thumb && !ps__railX && !ps__railY) {
-                    var ps = new PerfectScrollbar(thumb);
-
-                    ps.update();
-                }
-            } else {
-                if(thumb && ps__railX && ps__railY) {
-                    thumb.removeChild(ps__railX);
-                    thumb.removeChild(ps__railY);
+            if(thumb && !ps__railX && !ps__railY) {
+                if (window.matchMedia("(min-width: 769px)").matches) {
+                    var newScroll = new PerfectScrollbar(thumb);
+                    newScroll.update();
                 }
             }
-
             if(thumb) {
                 thumb.scrollTop = 0;
             }
         }
 
-        perfectScroll();
+        function destroyScroll() {
+            if (window.matchMedia("(max-width: 768px)").matches) {
+                ps.destroy();
+            }
+        }
 
-        window.addEventListener('resize', function(){
-            perfectScroll();
+        updateScroll();
+        destroyScroll();
+
+        window.addEventListener('resize', function() {
+            updateScroll();
+            destroyScroll();
         }, false);
-
     }
 
 
@@ -591,29 +593,28 @@ var imageGallery = function() {
 
 
     function _mobileToggleDetails() {
-        if (window.matchMedia("(max-width: 768px)").matches) {
-            var bodyImageGallery = document.querySelector('.body-image-gallery');
+        var bodyImageGallery = document.querySelector('.body-image-gallery');
 
-            if(bodyImageGallery) {
-                var sidebarContainer = bodyImageGallery.querySelector('.sidebar-container');
+        if(bodyImageGallery) {
+            var sidebarContainer = bodyImageGallery.querySelector('.sidebar-container');
 
-                if(sidebarContainer) {
-                    var button = sidebarContainer.querySelector('.details-toggle .details-button');
+            if(sidebarContainer) {
+                var button = sidebarContainer.querySelector('.details-toggle .details-button');
 
-                    button.addEventListener('click', function() {
-                        var toggleWrapper = sidebarContainer.querySelector('.toggle-wrapper'),
-                            toggleWrapperContainer = toggleWrapper.querySelector('.toggle-wrapper-container');
+                button.addEventListener('click', function() {
+                    var toggleWrapper = sidebarContainer.querySelector('.toggle-wrapper'),
+                        toggleWrapperContainer = toggleWrapper.querySelector('.toggle-wrapper-container');
 
-                        if(toggleWrapperContainer.classList.contains('active')) {
-                           toggleWrapperContainer.classList.remove('active');
-                           button.classList.remove('active');
 
-                        } else {
-                            toggleWrapperContainer.classList.add('active');
-                            button.classList.add('active');
-                        }
-                    }, false);
-                }
+                    if(toggleWrapperContainer.classList.contains('active')) {
+                       toggleWrapperContainer.classList.remove('active');
+                       button.classList.remove('active');
+
+                    } else {
+                        toggleWrapperContainer.classList.add('active');
+                        button.classList.add('active');
+                    }
+                }, false);
             }
         }
     }
