@@ -611,13 +611,12 @@ var imageGallery = function() {
                         }, 250);
 
                     } else {
-                        button.classList.add('active');
-
                         toggleWrapperContainer.classList.add('block');
 
                         setTimeout(function() {
+                            button.classList.add('active');
                             toggleWrapperContainer.classList.add('active');
-                        }, 50);
+                        }, 100);
                     }
                 }, false);
             }
