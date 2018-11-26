@@ -337,8 +337,18 @@ section.body-image-gallery {
 
                 .body-image {
                     top: 0;
+                    max-height: 50vh;
+                    height: 100%;
+
                     @include full-block();
                     @include translate(0, 0);
+
+                    img {
+                        object-fit: contain;
+                        object-position: 50% 50%;
+                        width: 100%;
+                        height: 100%;
+                    }
                 }
 
                 .sidebar-container {
