@@ -616,7 +616,7 @@ var imageGallery = function() {
                         setTimeout(function() {
                             button.classList.add('active');
                             toggleWrapperContainer.classList.add('active');
-                        }, 100);
+                        }, 50);
                     }
                 }, false);
             }
