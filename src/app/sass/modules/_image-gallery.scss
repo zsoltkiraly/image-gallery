@@ -198,7 +198,13 @@ section.body-image-gallery {
                 @include opacity(1);
                 @include transition(opacity .2s ease-out);
 
-                i.icon-cancel { font-size: 25px; font-weight: bold; }
+                i.icon-cancel {
+                    font-size: 25px;
+                    font-weight: bold;
+                    
+                    @include backface-visibility(hidden);
+                }
+
                 &:hover { @include opacity(.5); }
 
                 @media only screen and (max-width: $mobile) { top: 24px; right: 20px; i.icon-cancel { font-size: 20px;  } }
@@ -550,6 +556,11 @@ section.body-image-gallery {
             display: inline-block;
             font-weight: bold;
             top: 1px;
+        }
+
+        &.prev,
+        &.next {
+            @include backface-visibility(hidden);
         }
 
         &.prev {
