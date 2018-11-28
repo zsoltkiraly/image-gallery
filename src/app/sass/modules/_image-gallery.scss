@@ -159,7 +159,7 @@ section.body-image-gallery {
             z-index: 1;
             background-color: black;
 
-            @media only screen and (min-width: $minMobile) { padding: 90px 0 40px; }
+            @media only screen and (min-width: $minMobile) { padding: 100px 0 40px; }
             @media only screen and (max-width: $mobile) {
                 width: 100%;
                 background-color: transparent;
@@ -396,15 +396,15 @@ section.body-image-gallery {
                                 display: inline-block;
                                 padding: 3px;
                                 margin-left: 15px;
-                                top: -3px;
+                                top: 2px;
                                 right: 3px;
                                 position: relative;
 
-                                @include rotate(45deg); 
+                                @include rotate(-135deg); 
                             }
 
                             &.active {
-                                i.arrow { top: 2px; @include rotate(-135deg); }
+                                i.arrow { top: -3px; @include rotate(45deg); }
                             }
                         }
                     }
@@ -561,6 +561,8 @@ section.body-image-gallery {
         &.prev,
         &.next {
             @include backface-visibility(hidden);
+            
+            &:hover { background-color: #333; }
         }
 
         &.prev {
@@ -568,9 +570,12 @@ section.body-image-gallery {
 
             @include border-radius-right(30px);
 
-            @media only screen and (max-width: $tablet) { @include border-radius-right(20px); }
+            @media only screen and (max-width: $tablet) {
+                @include border-radius-right(20px);
 
-            &:hover { background-color: #333 };
+                &:hover { background-color: rgba(0, 204, 101, .5); };
+            }
+
 
         }
         &.next {
@@ -578,9 +583,11 @@ section.body-image-gallery {
 
             @include border-radius-left(30px);
 
-            @media only screen and (max-width: $tablet) { @include border-radius-left(20px); }
+            @media only screen and (max-width: $tablet) {
+                @include border-radius-left(20px);
 
-            &:hover { background-color: #333 };
+                &:hover { background-color: rgba(0, 204, 101, .5); }
+            }
         }
     }
 } //Arrow previous & arrow next finish

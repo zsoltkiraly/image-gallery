@@ -9,27 +9,6 @@ var imageGallery = function() {
 
     var clickPermission = true;
 
-    function hasTouch() {
-        return 'ontouchstart' in document.documentElement || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
-    }
-
-    if (hasTouch()) {
-        try {
-            for (var si in document.styleSheets) {
-                var styleSheet = document.styleSheets[si];
-                if (!styleSheet.rules) continue;
-
-                for (var ri = styleSheet.rules.length - 1; ri >= 0; ri--) {
-                    if (!styleSheet.rules[ri].selectorText) continue;
-
-                    if (styleSheet.rules[ri].selectorText.match(':hover')) {
-                        styleSheet.deleteRule(ri);
-                    }
-                }
-            }
-        } catch (ex) {}
-    }
-
 
     var forEach = function (array, callback, scope) {
         var i = 0;
@@ -565,12 +544,12 @@ var imageGallery = function() {
 
                 if (window.matchMedia("(min-width: 768px)").matches) {
                     bodyImage.addEventListener('mousedown', function(e) {
-                        startxMouse = event.clientX;
+                        startxMouse = e.clientX;
 
                         e.preventDefault();
 
                          bodyImage.addEventListener('mouseup', function(e) {
-                            distMouse = startxMouse - event.clientX;
+                            distMouse = startxMouse - e.clientX;
                             if (distMouse > 100) {
                                 _next(element, bodyImageSrc, id, bodyImageGallery, loading);
 
@@ -705,6 +684,28 @@ var imageGallery = function() {
                         _setLandscape(bodyImageGallery);
                     }, false);
                 }
+
+                function hasTouch() {
+                    return 'ontouchstart' in document.documentElement || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+                }
+
+                if (hasTouch()) {
+                    try {
+                        for (var si in document.styleSheets) {
+                            var styleSheet = document.styleSheets[si];
+                            if (!styleSheet.rules) continue;
+
+                            for (var ri = styleSheet.rules.length - 1; ri >= 0; ri--) {
+                                if (!styleSheet.rules[ri].selectorText) continue;
+
+                                if (styleSheet.rules[ri].selectorText.match(':hover')) {
+                                    styleSheet.deleteRule(ri);
+                                }
+                            }
+                        }
+                    } catch (ex) {}
+                }
+
             }, false);
         });
     }
