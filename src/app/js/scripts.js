@@ -277,8 +277,26 @@ var imageGallery = function() {
     }
 
 
+    function _imageDimension(image) {
+        image.addEventListener('load', function() {
+            var width = image.naturalWidth,
+                height = image.naturalHeight;
+
+            if(width < height) {
+                image.classList.add('portrait');
+
+            } else {
+                image.classList.remove('portrait');
+            }
+
+        }, false);
+    }
+
+
     function _imageRender(image, loading, element, end, direction) {
         image.classList.add('in-active');
+
+        _imageDimension(image);
 
         setTimeout(function() {
             if(direction) {
@@ -302,6 +320,7 @@ var imageGallery = function() {
             _loaderDestroy(loading);
             image.classList.remove('in-active');
         }, false);
+
     }
 
 
@@ -642,12 +661,13 @@ var imageGallery = function() {
                     bodyImageSrc.setAttribute('src', objSrc);
                     bodyImageSrc.classList.remove('in-active');
 
+                    _imageDimension(bodyImageSrc);
+                    
                     _loaderRender(loading);
 
                     bodyImageSrc.addEventListener('load', function() {
                         _loaderDestroy(loading);
                     }, false);
-
 
                     //Active thumb
                     forEach(bodyThumbs, function (index, elThumb) {

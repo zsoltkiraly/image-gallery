@@ -185,6 +185,22 @@ section.body-image-gallery {
                 display: none;
             }
 
+            @media only screen and (min-width: $minMobile) {
+                .body-image {
+                    img.portrait {
+                        object-fit: contain;
+                        object-position: 50% 50%;
+                        width: auto;
+                        height: auto;
+                        max-width: 100%;
+                        max-height: 80vh;
+                        margin: 0 auto;
+                        position: relative;
+                        display: block;
+                    }
+                }
+            }
+
 
             //Close icon
             .image-gallery-close {
@@ -589,8 +605,8 @@ section.body-image-gallery {
                 &:hover { background-color: rgba(0, 204, 101, .5); }
             }
         }
-    }
-} //Arrow previous & arrow next finish
+    } //Arrow previous & arrow next finish
+}
 
 
 
