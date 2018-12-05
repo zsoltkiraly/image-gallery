@@ -41,6 +41,12 @@ var imageGallery = function() {
 
 
     function _renderGalleryDOM(i) {
+        var nodeList = '';
+
+        if(i.length == 1) {
+            nodeList = 'in-active';
+        }
+
         if(!document.querySelector('.body-image-gallery')) {
             var bodyGallery = document.createElement('section');
             bodyGallery.classList.add('body-image-gallery', 'in-active');
@@ -57,8 +63,8 @@ var imageGallery = function() {
                     '<div class="body-image">' +
 
                         '<div class="loading in-active"></div><img class="in-active" src="">' +
-                        '<div class="navigation prev"><i class="icon-left-arrow"></i></div>' + 
-                        '<div class="navigation next"><i class="icon-right-arrow"></i></div>' + 
+                        '<div class="navigation prev '+ nodeList +'"><i class="icon-left-arrow"></i></div>' + 
+                        '<div class="navigation next '+ nodeList +'"><i class="icon-right-arrow"></i></div>' + 
                     '</div>' + 
 
                     '<div class="sidebar-container">' +
@@ -66,7 +72,7 @@ var imageGallery = function() {
                             '<div class="counter mobile">' +
                                 '<span class="number"></span> / <span class="number-max"></span>' + 
                             '</div>' + 
-                            '<div class="details-button"><span>Details</span> <i class="arrow"></i></div>' +
+                            '<div class="details-button"><span>Részletek</span> <i class="arrow"></i></div>' +
                         '</div>' + 
 
                         '<div class="toggle-wrapper">' +
@@ -208,6 +214,8 @@ var imageGallery = function() {
     function _closeGalleryClick(id) {
         var bodyImageGallery = document.querySelector('.body-image-gallery');
 
+        var closeGallery = true;
+
         if(bodyImageGallery && id) {
             var closeIcon = bodyImageGallery.querySelector('.icon-cancel');
 
@@ -231,9 +239,14 @@ var imageGallery = function() {
                 document.body.removeAttribute('data-scroll');
             }
 
+
             closeIcon.addEventListener('click', function() {
-                close();
+                if(closeGallery) {
+                    close();
+                    closeGallery = false;
+                }
             }, false);
+
         }
     }
 
@@ -473,37 +486,39 @@ var imageGallery = function() {
 
                 thumb.addEventListener('click', function() {
 
-                    if(clickPermission) {
-                        clickPermission = false;
+                    if(thumbs.length > 1) {
+                        if(clickPermission) {
+                            clickPermission = false;
 
-                        setTimeout(function() {
-                            clickPermission = true;
-                        }, 700 + 50);
+                            setTimeout(function() {
+                                clickPermission = true;
+                            }, 700 + 50);
 
-                        var obj = this;
+                            var obj = this;
 
-                        forEach(thumbs, function (index, el) {
-                            el.classList.remove('active');
-                        });
+                            forEach(thumbs, function (index, el) {
+                                el.classList.remove('active');
+                            });
 
-                        forEach(elUser, function (index, user) {
-                            user.classList.remove('active');
+                            forEach(elUser, function (index, user) {
+                                user.classList.remove('active');
 
-                            if(parseFloat(obj.getAttribute('data-thumb-id')) == parseFloat(user.getAttribute('data-user-id'))) {
-                                user.classList.add('active');
-                            }
-                        });
+                                if(parseFloat(obj.getAttribute('data-thumb-id')) == parseFloat(user.getAttribute('data-user-id'))) {
+                                    user.classList.add('active');
+                                }
+                            });
 
-                        obj.classList.add('active');
+                            obj.classList.add('active');
 
-                        //Set number 
-                        var number = bodyImageGallery.querySelectorAll('span.number');
-                        forEach(number, function (index, num) {
-                            num.innerHTML = obj.getAttribute('data-thumb-id');
-                        });
+                            //Set number 
+                            var number = bodyImageGallery.querySelectorAll('span.number');
+                            forEach(number, function (index, num) {
+                                num.innerHTML = obj.getAttribute('data-thumb-id');
+                            });
 
-                        _imageRender(bodyImageSrc, loading, obj, false, true);
-                        _setTitleAndLead(imageGalleryHeader, lead, obj);
+                            _imageRender(bodyImageSrc, loading, obj, false, true);
+                            _setTitleAndLead(imageGalleryHeader, lead, obj);
+                        }
                     }
                 }, false);
 
@@ -525,11 +540,15 @@ var imageGallery = function() {
                 previous = bodyImageGallery.querySelector('.navigation.prev');
 
             next.addEventListener('click', function() {
-                _next(element, bodyImageSrc, id, bodyImageGallery, loading);
+                if(element.length > 1) {
+                    _next(element, bodyImageSrc, id, bodyImageGallery, loading);
+                }
             }, false);
 
             previous.addEventListener('click', function() {
-                _previous(element, bodyImageSrc, id, bodyImageGallery, loading);
+                if(element.length > 1) {
+                    _previous(element, bodyImageSrc, id, bodyImageGallery, loading);
+                }
             }, false);
 
 
@@ -541,44 +560,50 @@ var imageGallery = function() {
             if (bodyImage) {
 
                 bodyImage.addEventListener('touchstart', function(e) {
-                    var touchobj = e.changedTouches[0];
-                    startxTouch = parseInt(touchobj.clientX);
+                    if(element.length > 1) {
+                        var touchobj = e.changedTouches[0];
+                        startxTouch = parseInt(touchobj.clientX);
+                    }
                 }, false);
 
 
                 bodyImage.addEventListener('touchend', function(e) {
-                    if(e.touches.length == 0) {
-                        var touchobj = e.changedTouches[0];
-                        var distTouch = parseInt(touchobj.clientX) - startxTouch;
+                    if(element.length > 1) {
+                        if(e.touches.length == 0) {
+                            var touchobj = e.changedTouches[0];
+                            var distTouch = parseInt(touchobj.clientX) - startxTouch;
 
-                        if (distTouch > 70) {
-                            _previous(element, bodyImageSrc, id, bodyImageGallery, loading);
+                            if (distTouch > 70) {
+                                _previous(element, bodyImageSrc, id, bodyImageGallery, loading);
 
-                        } else if (distTouch < -70) {
-                            _next(element, bodyImageSrc, id, bodyImageGallery, loading);
+                            } else if (distTouch < -70) {
+                                _next(element, bodyImageSrc, id, bodyImageGallery, loading);
+                            }
                         }
                     }
                 }, false);
 
 
                 if (window.matchMedia("(min-width: 768px)").matches) {
-                    bodyImage.addEventListener('mousedown', function(e) {
-                        startxMouse = e.clientX;
-
-                        e.preventDefault();
-
-                         bodyImage.addEventListener('mouseup', function(e) {
-                            distMouse = startxMouse - e.clientX;
-                            if (distMouse > 100) {
-                                _next(element, bodyImageSrc, id, bodyImageGallery, loading);
-
-                            } else if (distMouse < -100) {
-                                _previous(element, bodyImageSrc, id, bodyImageGallery, loading);
-                            }
+                    if(element.length > 1) {
+                        bodyImage.addEventListener('mousedown', function(e) {
+                            startxMouse = e.clientX;
 
                             e.preventDefault();
+
+                             bodyImage.addEventListener('mouseup', function(e) {
+                                distMouse = startxMouse - e.clientX;
+                                if (distMouse > 100) {
+                                    _next(element, bodyImageSrc, id, bodyImageGallery, loading);
+
+                                } else if (distMouse < -100) {
+                                    _previous(element, bodyImageSrc, id, bodyImageGallery, loading);
+                                }
+
+                                e.preventDefault();
+                            }, false);
                         }, false);
-                    }, false);
+                    }
                 }
             }
         }

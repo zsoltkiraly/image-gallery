@@ -574,6 +574,8 @@ section.body-image-gallery {
             top: 1px;
         }
 
+        &.in-active { display: none; }
+
         &.prev,
         &.next {
             @include backface-visibility(hidden);
