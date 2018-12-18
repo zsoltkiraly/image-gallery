@@ -114,9 +114,17 @@ var imageGallery = function() {
             var thumb = bIG.querySelector('.thumb ul');
         }
 
+        var spanElement;
+
         if(thumb) {
             forEach(element, function (index, el) {
-                thumb.innerHTML += '<li data-image-src="' + el.getAttribute('data-image-src') + '" data-thumb-id="' + parseFloat(index + 1) + '"><img src="' + el.querySelector('img').getAttribute('src') +'" alt="' + el.querySelector('img').alt +'" /><span>' + el.querySelector('span').innerHTML +'</span></li>';
+                if(el.querySelector('span')) {
+                    spanElement = el.querySelector('span').innerHTML;
+                } else {
+                    spanElement = '';
+                }
+
+                thumb.innerHTML += '<li data-image-src="' + el.getAttribute('data-image-src') + '" data-thumb-id="' + parseFloat(index + 1) + '"><img src="' + el.querySelector('img').getAttribute('src') +'" alt="' + el.querySelector('img').alt +'" /><span>' + spanElement +'</span></li>';
             });  
         }
     }
