@@ -17,14 +17,18 @@ var imageGallery = function() {
         }
     }
 
+    function qS(pre, eLclass, all) {
+        return all ? pre.querySelectorAll('' + eLclass +'') : pre.querySelector('' + eLclass +'');
+    }
+
     function keydown() {
         document.addEventListener('keydown', function(e) {
-            var bodyImageGallery = document.querySelector('.body-image-gallery');
+            var bodyImageGallery = qS(document, '.body-image-gallery', false);
             if(bodyImageGallery) {
 
-                var next = bodyImageGallery.querySelector('.navigation.next'),
-                    previous = bodyImageGallery.querySelector('.navigation.prev'),
-                    closeIcon = bodyImageGallery.querySelector('.icon-cancel'); 
+                var next = qS(bodyImageGallery, '.navigation.next', false),
+                    previous = qS(bodyImageGallery, '.navigation.prev', false),
+                    closeIcon = qS(bodyImageGallery, '.icon-cancel', false); 
 
                 if (e.keyCode == 39) {
                     next.click();
@@ -47,7 +51,7 @@ var imageGallery = function() {
             nodeList = 'in-active';
         }
 
-        if(!document.querySelector('.body-image-gallery')) {
+        if(!qS(document, '.body-image-gallery', false)) {
             var bodyGallery = document.createElement('section');
             bodyGallery.classList.add('body-image-gallery', 'in-active');
 
@@ -111,20 +115,20 @@ var imageGallery = function() {
 
     function _renderThumbImageDOM(bIG, element) {
         if(bIG) {
-            var thumb = bIG.querySelector('.thumb ul');
+            var thumb = qS(bIG, '.thumb ul', false);
         }
 
         var spanElement;
 
         if(thumb) {
             forEach(element, function (index, el) {
-                if(el.querySelector('span')) {
-                    spanElement = el.querySelector('span').innerHTML;
+                if(qS(el, 'span', false)) {
+                    spanElement = qS(el, 'span', false).innerHTML;
                 } else {
                     spanElement = '';
                 }
 
-                thumb.innerHTML += '<li data-image-src="' + el.getAttribute('data-image-src') + '" data-thumb-id="' + parseFloat(index + 1) + '"><img src="' + el.querySelector('img').getAttribute('src') +'" alt="' + el.querySelector('img').alt +'" /><span>' + spanElement +'</span></li>';
+                thumb.innerHTML += '<li data-image-src="' + el.getAttribute('data-image-src') + '" data-thumb-id="' + parseFloat(index + 1) + '"><img src="' + qS(el, 'img', false).getAttribute('src') +'" alt="' + qS(el, 'img', false).alt +'" /><span>' + spanElement +'</span></li>';
             });  
         }
     }
@@ -167,12 +171,12 @@ var imageGallery = function() {
 
     //PerfectScrollbar
     function _scroll() {
-        var thumb = document.querySelector('.body-image-gallery .thumb ul'),
+        var thumb = qS(document, '.body-image-gallery .thumb ul', false),
             ps = new PerfectScrollbar(thumb);
         
         function updateScroll() {
-            var ps__railX = document.querySelector('.ps__rail-x'),
-                ps__railY = document.querySelector('.ps__rail-y');
+            var ps__railX = qS(document, '.ps__rail-x', false),
+                ps__railY = qS(document, '.ps__rail-y', false);
 
             if (window.matchMedia("(min-width: 769px)").matches) {
                 if(thumb && !ps__railX && !ps__railY) {
@@ -220,12 +224,12 @@ var imageGallery = function() {
 
 
     function _closeGalleryClick(id) {
-        var bodyImageGallery = document.querySelector('.body-image-gallery');
+        var bodyImageGallery = qS(document, '.body-image-gallery', false);
 
         var closeGallery = true;
 
         if(bodyImageGallery && id) {
-            var closeIcon = bodyImageGallery.querySelector('.icon-cancel');
+            var closeIcon = qS(bodyImageGallery, '.icon-cancel', false);
 
 
             function close() {
@@ -237,7 +241,7 @@ var imageGallery = function() {
 
                 _enableScroll();
 
-                var itemActive = id.querySelector('ul.user-image-gallery-container li.active');
+                var itemActive = qS(id, 'ul.user-image-gallery-container li.active', false);
 
                 if(itemActive) {
                     itemActive.classList.remove('active');
@@ -284,8 +288,8 @@ var imageGallery = function() {
 
 
     function _setTitleAndLead(header, leadParam, o) {
-        var img = o.querySelector('img'),
-            span = o.querySelector('span');
+        var img = qS(o, 'img', false),
+            span = qS(o, 'span', false);
 
         if(img && span) {
 
@@ -354,11 +358,11 @@ var imageGallery = function() {
                 clickPermission = true;
             }, 700 + 50);
 
-            var actualActive = id.querySelector('ul.user-image-gallery-container li.active'),
-                thumb = bIG.querySelectorAll('.thumb ul li'),
-                counter = bIG.querySelectorAll('.counter span.number'),
-                imageGalleryHeader = bIG.querySelectorAll('.image-gallery-header'),
-                lead = bIG.querySelector('.lead');
+            var actualActive = qS(id, 'ul.user-image-gallery-container li.active', false),
+                thumb = qS(bIG, '.thumb ul li', true),
+                counter = qS(bIG, '.counter span.number', true),
+                imageGalleryHeader = qS(bIG, '.image-gallery-header', true),
+                lead = qS(bIG, '.lead', false);
 
             var actualActiveId = parseFloat(actualActive.getAttribute('data-user-id'));
 
@@ -422,11 +426,11 @@ var imageGallery = function() {
                 clickPermission = true;
             }, 700 + 50);
 
-            var actualActive = id.querySelector('ul.user-image-gallery-container li.active'),
-                thumb = bIG.querySelectorAll('.thumb ul li'),
-                counter = bIG.querySelectorAll('.counter span.number'),
-                imageGalleryHeader = bIG.querySelectorAll('.image-gallery-header'),
-                lead = bIG.querySelector('.lead');
+            var actualActive = qS(id, 'ul.user-image-gallery-container li.active', false),
+                thumb = qS(bIG, '.thumb ul li', true),
+                counter = qS(bIG, '.counter span.number', true),
+                imageGalleryHeader = qS(bIG, '.image-gallery-header', true),
+                lead = qS(bIG, '.lead', false);
 
             var actualActiveId = parseFloat(actualActive.getAttribute('data-user-id'));
 
@@ -480,21 +484,21 @@ var imageGallery = function() {
 
 
     function _thumb(elUser) {
-        var bodyImageGallery = document.querySelector('.body-image-gallery');
+        var bodyImageGallery = qS(document, '.body-image-gallery', false);
 
         if(bodyImageGallery) {
-            var bodyImage = bodyImageGallery.querySelector('.body-image'),
-                loading = bodyImage.querySelector('.loading'),
-                bodyImageSrc = bodyImage.querySelector('.body-image img'),
-                thumbs = bodyImageGallery.querySelectorAll('.thumb ul li'),
-                imageGalleryHeader = bodyImageGallery.querySelectorAll('.image-gallery-header'),
-                lead = bodyImageGallery.querySelector('.lead');
+            var bodyImage = qS(bodyImageGallery, '.body-image', false),
+                loading = qS(bodyImage, '.loading', false),
+                bodyImageSrc = qS(bodyImage, '.body-image img', false),
+                thumb = qS(bodyImageGallery, '.thumb ul li', true),
+                imageGalleryHeader = qS(bodyImageGallery, '.image-gallery-header', true),
+                lead = qS(bodyImageGallery, '.lead', false);
 
-            forEach(thumbs, function (index, thumb) {
+            forEach(thumb, function (index, elThumb) {
 
-                thumb.addEventListener('click', function() {
+                elThumb.addEventListener('click', function() {
 
-                    if(thumbs.length > 1) {
+                    if(thumb.length > 1) {
                         if(clickPermission) {
                             clickPermission = false;
 
@@ -504,8 +508,8 @@ var imageGallery = function() {
 
                             var obj = this;
 
-                            forEach(thumbs, function (index, el) {
-                                el.classList.remove('active');
+                            forEach(thumb, function (index, elThumb) {
+                                elThumb.classList.remove('active');
                             });
 
                             forEach(elUser, function (index, user) {
@@ -519,7 +523,7 @@ var imageGallery = function() {
                             obj.classList.add('active');
 
                             //Set number 
-                            var number = bodyImageGallery.querySelectorAll('span.number');
+                            var number = qS(bodyImageGallery, 'span.number', true);
                             forEach(number, function (index, num) {
                                 num.innerHTML = obj.getAttribute('data-thumb-id');
                             });
@@ -537,15 +541,15 @@ var imageGallery = function() {
 
 
     function _navigation(element, id) {
-        var bodyImageGallery = document.querySelector('.body-image-gallery');
+        var bodyImageGallery = qS(document, '.body-image-gallery', false);
 
         if(bodyImageGallery) {
-            var bodyImage = bodyImageGallery.querySelector('.body-image'),
-                loading = bodyImage.querySelector('.loading'),
-                bodyImageSrc = bodyImage.querySelector('.body-image img');
+            var bodyImage = qS(bodyImageGallery, '.body-image', false),
+                loading = qS(bodyImage, '.loading', false),
+                bodyImageSrc = qS(bodyImage, '.body-image img', false);
 
-            var next = bodyImageGallery.querySelector('.navigation.next'),
-                previous = bodyImageGallery.querySelector('.navigation.prev');
+            var next = qS(bodyImageGallery, '.navigation.next', false),
+                previous = qS(bodyImageGallery, '.navigation.prev', false);
 
             next.addEventListener('click', function() {
                 if(element.length > 1) {
@@ -619,17 +623,17 @@ var imageGallery = function() {
 
 
     function _mobileToggleDetails() {
-        var bodyImageGallery = document.querySelector('.body-image-gallery');
+        var bodyImageGallery = qS(document, '.body-image-gallery', false);
 
         if(bodyImageGallery) {
-            var sidebarContainer = bodyImageGallery.querySelector('.sidebar-container');
+            var sidebarContainer = qS(bodyImageGallery, '.sidebar-container', false);
 
             if(sidebarContainer) {
-                var button = sidebarContainer.querySelector('.details-toggle .details-button');
+                var button = qS(sidebarContainer, '.details-toggle .details-button', false);
 
                 button.addEventListener('click', function() {
-                    var toggleWrapper = sidebarContainer.querySelector('.toggle-wrapper'),
-                        toggleWrapperContainer = toggleWrapper.querySelector('.toggle-wrapper-container');
+                    var toggleWrapper = qS(sidebarContainer, '.toggle-wrapper', false),
+                        toggleWrapperContainer = qS(toggleWrapper, '.toggle-wrapper-container', false);
 
 
                     if(toggleWrapperContainer.classList.contains('active')) {
@@ -668,14 +672,14 @@ var imageGallery = function() {
                 _navigation(element, id);
                 _mobileToggleDetails();
 
-                var bodyImageGallery = document.querySelector('.body-image-gallery');
+                var bodyImageGallery = qS(document, '.body-image-gallery', false);
 
                 if(bodyImageGallery) {
-                    var bodyImage = bodyImageGallery.querySelector('.body-image'),
-                        loading = bodyImage.querySelector('.loading'),
-                        bodyImageSrc = bodyImage.querySelector('.body-image img'),
-                        imageGalleryHeader = bodyImageGallery.querySelectorAll('.image-gallery-header'),
-                        lead = bodyImageGallery.querySelector('.lead');
+                    var bodyImage = qS(bodyImageGallery, '.body-image', false),
+                        loading = qS(bodyImage, '.loading', false),
+                        bodyImageSrc = qS(bodyImage, '.body-image img', false),
+                        imageGalleryHeader = qS(bodyImageGallery, '.image-gallery-header', true),
+                        lead = qS(bodyImageGallery, '.lead', false);
                 
                     //Render thumb
                     _renderThumbImageDOM(bodyImageGallery, element);
@@ -687,7 +691,7 @@ var imageGallery = function() {
                     //Set active
                     obj.classList.add('active');
 
-                    var bodyThumbs = bodyImageGallery.querySelectorAll('.thumb ul li');
+                    var bodyThumbs = qS(bodyImageGallery, '.thumb ul li', true);
 
 
                     //Render first load
@@ -711,13 +715,13 @@ var imageGallery = function() {
 
 
                     //Set number 
-                    var number = bodyImageGallery.querySelectorAll('span.number');
+                    var number = qS(bodyImageGallery, 'span.number', true);
 
                     forEach(number, function (index, num) {
                         num.innerHTML = objUserId;
                     });
 
-                    var numberMax = bodyImageGallery.querySelectorAll('span.number-max');
+                    var numberMax = qS(bodyImageGallery, 'span.number-max', true);
                     forEach(numberMax, function (index, numMax) {
                         numMax.innerHTML = element.length;
                     });
@@ -765,10 +769,10 @@ var imageGallery = function() {
 
 
     function app() {
-        var imageGalleryId = document.querySelector('#' + config.render + '');
+        var imageGalleryId = qS(document, '#' + config.render + '', false);
 
         if(imageGalleryId) {
-            var item = imageGalleryId.querySelectorAll('ul.user-image-gallery-container li');
+            var item = qS(imageGalleryId, 'ul.user-image-gallery-container li', true);
 
             _renderGallery(item, imageGalleryId);
         }
