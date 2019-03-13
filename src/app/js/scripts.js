@@ -1,11 +1,33 @@
 /*
 Image gallery - Code by Zsolt Király
-v1.0.1 - 2018-11-26
+v1.0.2 - 2019-03-13
 */
 
 var imageGallery = function() {
 
     'use strict';
+
+    function signatura() {
+        if (window['console']) {
+            const text = {
+                black: '%c     ',
+                blue: '%c   ',
+                author: '%c  Zsolt Király  ',
+                github: '%c  https://zsoltkiraly.com/'
+            }
+
+            const style = {
+                black: 'background: #282c34',
+                blue: 'background: #1FC466',
+                author: 'background: black; color: white',
+                github: ''
+            }
+
+            console.log(text.black + text.blue + text.author + text.github, style.black, style.blue, style.author, style.github);
+        }
+    }
+
+    signatura();
 
     var clickPermission = true;
 
