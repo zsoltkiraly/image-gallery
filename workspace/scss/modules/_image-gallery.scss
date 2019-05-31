@@ -11,6 +11,7 @@
 
 i {
   font-family: 'gallery' !important;
+  speak: none;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -142,8 +143,10 @@ section.body-image-gallery {
             @include transition(opacity .1s ease-out);
     
             &.active { @include opacity(1); }
+
             &.in-active { display: none; }
         }
+
     }
 
     .body-image-gallery-container {
@@ -457,10 +460,13 @@ section.body-image-gallery {
                             margin-bottom: 15px;
                             margin-top: 15px;
                         }
-                        .counter {  &.desktop { display: none; } }
+                        .counter {
+                            &.desktop { display: none; }
+                        }
 
-                        &.details {  .image-gallery-header { display: none; } }
-
+                        &.details { 
+                            .image-gallery-header { display: none; }
+                        }
                         &.thumb {
                             margin-top: 20px;
 
@@ -591,6 +597,8 @@ section.body-image-gallery {
 
                 &:hover { background-color: rgba(0, 204, 101, .5); };
             }
+
+
         }
         &.next {
             right: 0;
